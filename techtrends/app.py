@@ -21,8 +21,7 @@ def getTotalPostCount():
     return posts
 
 def get_date_time_str():
-    date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    return f'{date}'
+    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 # Function to get a post using its ID
 def get_post(post_id):
@@ -42,7 +41,7 @@ def index():
     connection = get_db_connection()
     posts = connection.execute('SELECT * FROM posts').fetchall()
     connection.close()
-    app.logger.info(get_date_time_str()+f', Home page retrieved!')
+    app.logger.info(get_date_time_str()+', Home page retrieved!')
     return render_template('index.html', posts=posts)
 
 # Define how each individual article is rendered 
@@ -51,10 +50,10 @@ def index():
 def post(post_id):
     post = get_post(post_id)
     if post is None:
-      app.logger.info(get_date_time_str()+f', Article with id[{post_id}] not found!')
+      app.logger.info(get_date_time_str()+', Article with id['+post_id+'] not found!')
       return render_template('404.html'), 404
     else:
-      app.logger.info(get_date_time_str()+f', Article {post["title"]} retrieved!')
+      app.logger.info(get_date_time_str()+', Article '+post["title"]+' retrieved!')
       return render_template('post.html', post=post)
 
 # Define the About Us page
@@ -72,14 +71,14 @@ def create():
 
         if not title:
             flash('Title is required!')
-            app.logger.info(get_date_time_str()+f', New article cannot created because title is empty!')
+            app.logger.info(get_date_time_str()+', New article cannot created because title is empty!')
         else:
             connection = get_db_connection()
             connection.execute('INSERT INTO posts (title, content) VALUES (?, ?)',
                          (title, content))
             connection.commit()
             connection.close()
-            app.logger.info(get_date_time_str()+f', New article created with title {title}!')
+            app.logger.info(get_date_time_str()+', New article created with title "'+title+'""!')
             return redirect(url_for('index'))
 
     return render_template('create.html')
