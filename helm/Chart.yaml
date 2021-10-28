@@ -1,0 +1,8 @@
+apiVersion: v1
+name: techtrends
+description: Cloud Native Application Architecture Project 1
+keywords:
+- techtrends
+version: 1.0.0
+maintainers:
+- name: Taner Şenyurt
